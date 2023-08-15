@@ -1,2 +1,2 @@
-# food-explorer-backend
+# API Food Explorer
 🚧 Projeto final Programa Explorer 🚧 
