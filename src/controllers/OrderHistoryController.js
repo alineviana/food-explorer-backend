@@ -23,9 +23,7 @@ class OrderHistoryController {
   async index(request, response) {
     const user_id = request.params.id;
     
-    const orderHistory = await knex("orderHistory")
-      .where({ user_id })
-      .orderBy("status");
+    const orderHistory = await knex("orderHistory").where({ user_id })
 
     return response.json(orderHistory);
   }

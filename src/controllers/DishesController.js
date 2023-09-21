@@ -67,8 +67,9 @@ class DishesController {
 
     const dishesIngredients = await knex("ingredients");
     const dishesWithIngredients = dishes.map((dish) => {
-      
-      const dishIngredients = dishesIngredients.filter((ingredient) => ingredient.dish_id === dish.id);
+      const dishIngredients = dishesIngredients.filter(
+        (ingredient) => ingredient.dish_id === dish.id
+      );
 
       return {
         ...dish,
@@ -95,10 +96,8 @@ class DishesController {
 
   async update(request, response) {
     const { id } = request.params;
-    const imageFilename = request.file?.filename;
-    const { name, category, ingredients, oldIngredients, price, description } =
-      request.body;
-    const ingredients_array = JSON.parse(ingredients || oldIngredients || "[]");
+    const { name, category, ingredients, price, description, image } = request.body;
+    const diskStorage = new DiskStorage();
 
     const dish = await knex("dishes").where({ id }).first();
 
@@ -106,15 +105,8 @@ class DishesController {
       throw new AppError("O prato não foi encontrado!", 404);
     }
 
-    const updateDish = {
-      name: name ?? dish.name,
-      category: category ?? dish.category,
-      price: price ?? dish.price,
-      description: description ?? dish.description,
-    };
-
-    if (imageFilename) {
-      const diskStorage = new DiskStorage();
+    if (request.file) {
+      const imageFilename = request.file.filename;
 
       if (dish.image) {
         await diskStorage.deleteFile(dish.image);
@@ -122,23 +114,25 @@ class DishesController {
 
       const filename = await diskStorage.saveFile(imageFilename);
 
-      updateDish.image = filename;
+      dish.image = image ?? filename;
     }
 
-    if (ingredients) {
-      await knex("ingredients").where({ dish_id: id });
+    dish.name = name ?? dish.name;
+    dish.category = category ?? dish.category;
+    dish.price = price ?? dish.price;
+    dish.description = description ?? dish.description;
 
-      const ingredientsInsert = ingredients_array.map((name) => {
-        return {
-          dish_id: id,
-          name,
-        };
-      });
+    await knex("dishes").where({ id }).update(dish);
+    
+    const updateIngredients = ingredients.map(ingredient => {
+      return {
+        dish_id: id,
+        name: ingredient,
+      }
+    });
 
-      await knex("ingredients").insert(ingredientsInsert);
-    }
-
-    await knex("dishes").where({ id }).update(updateDish);
+    await knex('ingredients').where({ dish_id: id }).delete();
+    await knex('ingredients').where({ dish_id: id }).insert(updateIngredients);
 
     return response.json();
   }
