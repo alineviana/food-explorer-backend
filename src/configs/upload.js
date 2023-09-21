@@ -10,9 +10,9 @@ const MULTER = {
         destination: TMP_FOLDER,
         filename(request, file, callback) {
             const fileHash = crypto.randomBytes(10).toString("hex");
-            const filename = `${fileHash}-${file.originalname}`;
+            const fileName = `${fileHash}-${file.originalname}`;
 
-            return callback(null, filename);
+            return callback(null, fileName);
         },
     }),
 };
@@ -21,4 +21,4 @@ module.exports = {
     TMP_FOLDER,
     UPLOADS_FOLDER,
     MULTER
-}
+};
