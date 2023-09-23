@@ -5,7 +5,7 @@ const { hash } = require("bcryptjs");
 class UsersController {
   
   async create(request, response) {
-    const { name, email, password, isAdmin } = request.body;
+    const { name, email, password } = request.body;
 
     const checkUserExists = await knex.select('email').where({ email }).from('users');
 
@@ -19,7 +19,7 @@ class UsersController {
       name,
       email,
       password: hashedPassword,
-      isAdmin: true
+      isAdmin: false
     });
 
     return response.status(201).json();

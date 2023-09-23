@@ -23,13 +23,13 @@ class OrderHistoryController {
   async index(request, response) {
     const user_id = request.params.id;
     
-    const orderHistory = await knex("orderHistory").where({ user_id })
-
+    const orderHistory = await knex("orderHistory").where({ user_id });
+    
     return response.json(orderHistory);
   }
 
   async show(request, response) {
-    const orderHistory = await knex("orderHistory");
+    const orderHistory = await knex("orderHistory")
 
     return response.json(orderHistory);
   }

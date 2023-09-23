@@ -37,13 +37,8 @@ class OrdersController {
 
   async delete(request, response) {
     const order_id = request.params.order_id;
-    const user_id = request.params.user_id;
-    console.log(order_id)
-    console.log(request.params)
-   
     
     await knex("orders").where({ id: order_id }).delete();
-    
 
     return response.json();
   }
