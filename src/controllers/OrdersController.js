@@ -3,7 +3,6 @@ const knex = require("../database/knex");
 class OrdersController {
   async create(request, response) {
     const { name, total_price, quantity, dish_id, user_id } = request.body;
-    console.log(quantity)
 
     const [checkIfExist] = await knex("orders")
       .where({ dish_id })
