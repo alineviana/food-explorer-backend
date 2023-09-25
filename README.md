@@ -1,13 +1,15 @@
-# Food Explorer 🎥🎞️📽️🎬🎦
+# Food Explorer
 
-- Desafio Final Programa Explorer da Rocketseat
+| Desafio Final Programa Explorer da Rocketseat |
 
+<br>
 
 ## 🎯 Projeto
 - Aplicação em Node.js de um cardápio digital para um restaurante fictício, conhecido como Food Explorer.
 
 - Gerenciamento de usuários, pratos, ingredientes e pedidos.
 
+<br>
 
 ## 📖 Guia de instalação
 Clone o repositório executando o comando:
@@ -31,6 +33,7 @@ npm start
 
 - Conecte na API utilizando a porta 3333.
 
+<br>
 
 ## 🖥️ Tecnologias
 
@@ -39,6 +42,7 @@ npm start
 * [SQLite](https://www.sqlite.org/index.html) 
 * [Knex.js](https://knexjs.org/)
 
+<br>
 
 ## 👩‍💻 Author
 
